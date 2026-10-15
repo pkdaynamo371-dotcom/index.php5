@@ -317,11 +317,23 @@ COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html
             <?php endif; ?>
         </div>
+FROM php:8.2-apache
 
+# Install SQLite dependencies and extensions
+RUN apt-get update && apt-get install -y \
+    libsqlite3-dev \
+    && docker-php-ext-install pdo pdo_sqlite
+
+# Copy project files to web root
+COPY . /var/www/html/
+
+# Set proper permissions
+RUN chown -R www-data:www-data /var/www/html
     </div>
 
     <footer>
         <p>Core Engine <span>azeez</span> &copy; 2026</p>
     </footer>
-</body>
+</body>Dockerfile
+    
 </html>
